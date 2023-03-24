@@ -18,7 +18,7 @@ def plot_data(data):
     fig.add_trace(go.Scatter(x=data["Date"], y=data["Open"], name="stock_open"))
     fig.update_traces(line_color='red')
     fig.add_trace(go.Scatter(x=data["Date"], y=data["Close"], name="stock_close"))
-    fig.layout.update(title_text = "Time Series Data", xaxis_rangeslider_visible = True)
+    fig.layout.update(xaxis_rangeslider_visible = True)
     st.plotly_chart(fig)
 
 
@@ -32,7 +32,7 @@ stock_Tickers = ("TSLA", "AAPL", "META", "KO", "JNJ", "PG", "NVDA", "AMD")
 selected_stock = st.selectbox("Select your stock to get a prediction", stock_Tickers)
 
 #Creating the slider
-n_years = st.slider("Years of prediction: ", 1, 4)
+n_years = st.slider("Years of prediction: ", 1, 5)
 period_days = n_years * 365
 
 #Interactive interface when loading data
@@ -40,9 +40,10 @@ loading_state = st.text("Currently loading...")
 data = load_data(selected_stock)
 loading_state.text("...Done!")
 
-st.subheader("Market Summary")
-st.write(data.tail())
+st.subheader("Market Data")
+st.write(data)
 
+st.subheader("Market Summary")
 plot_data(data)
 
 #Stock forecast using Prophet
@@ -54,13 +55,13 @@ m.fit(df_train)
 future = m.make_future_dataframe(periods = period_days)
 forecast = m.predict(future)
 
-st.subheader(f"Forecast Summary({n_years}years)")
-st.write(forecast.tail())
+st.subheader(f"Forecast Data({n_years}years)")
+st.write(forecast)
 
-st.write('Forecast Data')
+st.subheader('Forecast Summary')
 fig1 = plot_plotly(m, forecast)
 st.plotly_chart(fig1)
 
-st.write('Forecast Components')
+st.subheader('Forecast Components')
 fig2 = m.plot_components(forecast)
 st.write(fig2)
