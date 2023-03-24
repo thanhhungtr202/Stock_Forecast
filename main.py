@@ -4,7 +4,7 @@ import yfinance as yf
 from prophet import Prophet
 from prophet.plot import plot_plotly
 from plotly import graph_objs as go
-import cmdstanpy
+
 #Caching data to reduce wait time
 @st.cache_data
 def load_data(ticker):

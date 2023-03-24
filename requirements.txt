@@ -1,0 +1,5 @@
+cmdstanpy==1.1.0
+plotly==5.13.1
+prophet==1.1.2
+streamlit==1.20.0
+yfinance==0.2.13
