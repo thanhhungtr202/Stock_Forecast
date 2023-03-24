@@ -50,10 +50,12 @@ plot_data(data)
 df_train = data[['Date', 'Close']]
 df_train = df_train.rename(columns = {"Date": "ds", "Close": "y"})
 
+loading_state2 = st.text("Currently loading forecast data...")
 m = Prophet()
 m.fit(df_train)
 future = m.make_future_dataframe(periods = period_days)
 forecast = m.predict(future)
+loading_state2.text("...Done!")
 
 st.subheader(f"Forecast Data({n_years}years)")
 st.write(forecast)
